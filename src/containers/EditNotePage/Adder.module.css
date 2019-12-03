@@ -1,0 +1,12 @@
+﻿.container {
+  grid-column: center;
+  grid-row: body;
+  margin: auto;
+  border-radius: 50px;
+  padding: 50px;
+  min-height: 250px;
+  background-color: white;
+}
+.error {
+  color: red
+}

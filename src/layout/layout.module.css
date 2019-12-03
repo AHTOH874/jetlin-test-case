@@ -1,0 +1,8 @@
+﻿.layout {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: [nav] 56px [body] auto;
+  grid-template-columns: [left-gutter] 2fr [center] 8fr [right-gutter] 2fr;
+  background: #ff512f;
+  background: linear-gradient(to right, #ff512f, #dd2476);
+}
