@@ -1,7 +1,7 @@
 ﻿import React, { useReducer, useEffect, useState } from 'react'
 import { BrowserRouter as Router,
   Route,
-  // Redirect,
+  Redirect,
   Switch
 } from 'react-router-dom';
 import Layout from './layout';
@@ -37,8 +37,9 @@ function reducer(state, { type, payload }) {
       const newNotes = [...state.notes.filter((v) => v.id !== payload.id), payload]
       localStorage.setItem('notes', JSON.stringify(newNotes));
       return { notes: newNotes, lastId: state.lastId }
-    // case 'setLastId':
-    //   return { notes: [...state.notes], lastId: payload.lastId }
+    case 'deleteNote':
+      localStorage.setItem('notes', JSON.stringify([...state.notes.filter((v) => v.id !== payload.id)]));
+      return { notes: [...state.notes.filter((v) => v.id !== payload.id)], lastId: state.lastId }
     case 'recieve':
       return payload
     default:
@@ -49,6 +50,7 @@ function reducer(state, { type, payload }) {
 const App = () => {
   const [isLoading, setLoadingState] = useState(true)
   const [state, dispatch] = useReducer(reducer, initialState)
+  const isNoteArrayEmpty = state.notes.length === 0
 
   useEffect(() => {
     let notes = JSON.parse(localStorage.getItem('notes'))
@@ -72,16 +74,16 @@ const App = () => {
             <EditNotePage needEdit notes={state.notes} lastId={state.lastId} dispatch={dispatch}/>
           </Route>
           <Route path="/add">
-            <EditNotePage dispatch={dispatch}/>
+            <EditNotePage info={isNoteArrayEmpty? 'У вас ещё нет заметок, добавьте' : ''} dispatch={dispatch}/>
           </Route>
           <Route exact path="/note/:Noteid">
             <NotePage />
           </Route>
           <Route exact path="/notes/:Page">
-            <NotesPage root={false} notes={state.notes}/>
+            <NotesPage root={false} dispatch={dispatch} notes={state.notes}/>
           </Route>          
           <Route exact path="/">
-            <NotesPage root notes={state.notes}/>
+            {isNoteArrayEmpty? <Redirect to="/add"/> : <NotesPage root dispatch={dispatch}  notes={state.notes}/>}
           </Route>
           <Route path="*">
             {/* TODO: Вывод информации */}

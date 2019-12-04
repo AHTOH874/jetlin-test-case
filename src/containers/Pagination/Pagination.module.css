@@ -1,0 +1,20 @@
+﻿.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+
+.pagination a {
+  padding: 15px;
+  background-color: #B9F73E;
+  font-size: medium;
+  color: black;
+  text-decoration: none;
+  border-radius: 25px;
+}
+
+.active {
+  background-color: #33CCCC !important;
+}

@@ -1,15 +1,49 @@
 ﻿.container {
-  background-color: green;
+  background-color: #FF7373;
   padding: 26px;
   line-height: 2rem;
+  border: 1px solid black;
+  border-collapse: collapse;
   font-size: 1.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  word-break: break-all;
 }
-
 
 .text {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  border-collapse: collapse;
   width: 50%;
+}
 
+.close {
+  width: 20px;
+  /* padding: 20px; */
+  position: relative;
+  opacity: 0.3;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  /* left: 15px; */
+  content: ' ';
+  height: 40px;
+  width: 2px;
+  background-color: #333;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
 }

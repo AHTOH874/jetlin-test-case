@@ -1,49 +1,37 @@
-﻿import React, { useState, useEffect} from 'react'
+﻿import React from 'react'
 import { useParams }from 'react-router-dom'
 import Note from '../../components/Note'
 
 import styles from "./Notespage.module.css";
+import Pagination from '../Pagination/Pagination';
 
-const AddNote = () => <div>Добавить</div>
-
-const NotesPage = ({root, notes}) => {
+const NotesPage = ({root, notes, dispatch}) => {
   let { Page } = useParams()
-  const isEmpty = notes.length === 0
   
-  const getArray = () => {
-    if (isEmpty)
-      throw Error("Массив с заметками пуст")
-    
-    if (!root && isNaN(Number(Page))) 
-      throw Error("Некорректо задан номер страницы")
-    
-    console.log((notes.length - Number(Page) * 5));
-      
-    if ((notes.length - Number(Page) * 5) < -5)
-      throw Error("Некорректо задан номер страницы")
-      
+  if (!root && isNaN(Number(Page)))
+    throw Error("Некорректо задан номер страницы")
+
+  if ((notes.length - Number(Page) * 5) < -5)
+    throw Error("Некорректо задан номер страницы")
+
+  const pageCount = Math.ceil(notes.length / 5)
+
+  const getSlicedArray = () => {
     if (root) {
       return notes.slice(0, 5);
     } else {
       return notes.slice(5 * (Number(Page) - 1), 5 * (Number(Page) - 1) + 5)
-    }
+    } 
   }
-
-  useEffect(()=> {
-    
-  }, [])
-  
 
   return (
     <div className={styles.container}>
-      {/* <ul> */}
       <div className={styles.notes}>
         {
-          !isEmpty ? getArray().map(({id, text, name})=> <Note key={id} text={text} id={id} name={name}/>):
-          <AddNote />
+          getSlicedArray().map(({ id, text, name }, i) => <Note dispatch={dispatch} key={i} text={text} id={id} name={name}/>)
         }
         </div>
-      {/* </ul> */}
+        <Pagination page={root ? 1: Number(Page) } pageCount={pageCount}/>
     </div>
   )
 }
