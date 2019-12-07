@@ -8,7 +8,6 @@ import Layout from './layout';
 import Navigator from './containers/Navigator'
 import EditNotePage from './containers/EditNotePage'
 import NotesPage from './containers/NotesPage'
-import NotePage from './containers/NotePage'
 import ErrorPage from './containers/ErrorPage'
 import Loading from './components/Loading';
 
@@ -75,9 +74,6 @@ const App = () => {
           </Route>
           <Route path="/add">
             <EditNotePage info={isNoteArrayEmpty? 'У вас ещё нет заметок, добавьте' : ''} dispatch={dispatch}/>
-          </Route>
-          <Route exact path="/note/:Noteid">
-            <NotePage />
           </Route>
           <Route exact path="/notes/:Page">
             <NotesPage root={false} dispatch={dispatch} notes={state.notes}/>

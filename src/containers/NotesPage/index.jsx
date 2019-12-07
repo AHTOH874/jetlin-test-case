@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { useParams }from 'react-router-dom'
-import Note from '../../components/Note'
+import Note from '../../components/Note/Note'
 
 import styles from "./Notespage.module.css";
 import Pagination from '../Pagination/Pagination';
